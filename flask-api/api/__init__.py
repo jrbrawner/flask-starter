@@ -2,7 +2,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import logging
-from flask_restful import Api, Resource
 
 db = SQLAlchemy()
 
@@ -10,7 +9,7 @@ db = SQLAlchemy()
 def create_app():
     """Construct the core app object."""
     app = Flask(__name__, instance_relative_config=False)
-    api = Api(app)
+    
     # Application Configuration
     app.config.from_object('config.Config')
 
@@ -31,10 +30,8 @@ def create_app():
 
 
     with app.app_context():
-        from .routes.app import HelloWorld, app_bp
+        from .routes.app import app_bp
         
-        api.add_resource(HelloWorld, '/')
-
         # Register Blueprints
         app.register_blueprint(app_bp)
         
